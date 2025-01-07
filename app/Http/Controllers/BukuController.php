@@ -94,6 +94,29 @@ class BukuController extends Controller
         }
     }
 
+    public function getBukuById($id){
+        if($id){
+            $data = Buku::query()->where('id',$id)->first();
+            if($data){
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Data Get Successfully',
+                    'data' => $data
+                ]);
+            }
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Data Get Error'
+            ]);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'id not found'
+            ]);
+        }
+
+    }
+
     public function updateBuku(Request $request, $id){
         if(!$id){
             return response()->json([

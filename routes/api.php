@@ -12,3 +12,4 @@ Route::post('/addBuku', [BukuController::class, 'addBuku'])->name('addBuku');
 Route::put('/updateBuku/{id}', [BukuController::class, 'updateBuku'])->name('updateBuku');
 Route::delete('/deleteBuku/{id}', [BukuController::class, 'deleteBuku'])->name('deleteBuku');
 Route::get('/listBuku', [BukuController::class, 'listBuku'])->name('listBuku');
+Route::get('/getBukuById/{id}', [BukuController::class, 'getBukuById/{id}'])->name('getBukuById/{id}');
