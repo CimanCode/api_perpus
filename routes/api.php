@@ -9,6 +9,6 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::post('/addBuku', [BukuController::class, 'addBuku'])->name('addBuku');
-Route::post('/updateBuku', [BukuController::class, 'updateBuku'])->name('updateBuku');
-Route::any('/deleteBuku', [BukuController::class, 'deleteBuku'])->name('deleteBuku');
+Route::put('/updateBuku/{id}', [BukuController::class, 'updateBuku'])->name('updateBuku');
+Route::delete('/deleteBuku/{id}', [BukuController::class, 'deleteBuku'])->name('deleteBuku');
 Route::get('/listBuku', [BukuController::class, 'listBuku'])->name('listBuku');

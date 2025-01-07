@@ -94,8 +94,8 @@ class BukuController extends Controller
         }
     }
 
-    public function updateBuku(Request $request){
-        if(!$request->id){
+    public function updateBuku(Request $request, $id){
+        if(!$id){
             return response()->json([
                 'status' => 'error',
                 'message' => 'Id is not found'
@@ -133,7 +133,7 @@ class BukuController extends Controller
 
         $data = $validator->validate();
 
-        $lates_data = Buku::query()->where('id', $request->id)->first();
+        $lates_data = Buku::query()->where('id', $id)->first();
         Storage::delete('public/' . $lates_data->gambar);
         if($request->hasFile('gambar')){
             $file = $request->file('gambar');
@@ -142,7 +142,7 @@ class BukuController extends Controller
         }
 
         try {
-            $is_updated = Buku::query()->where('id', $request->id)->update($data);
+            $is_updated = Buku::query()->where('id', $id)->update($data);
             if($is_updated){
                 return response()->json([
                     'status' => 'success',
@@ -162,19 +162,19 @@ class BukuController extends Controller
         }
     }
 
-    public function deleteBuku(Request $request){
-        if(!$request->id){
+    public function deleteBuku($id){
+        if(!$id){
             return response()->json([
                 'status' => 'error',
                 'message' => 'Id is Required'
             ], 404);
         }
 
-        $lates_data = Buku::query()->where('id', $request->id)->first();
+        $lates_data = Buku::query()->where('id', $id)->first();
         Storage::delete('public/' . $lates_data->gambar);
 
         try {
-            $is_deleted = Buku::query()->where('id', $request->id)->delete();
+            $is_deleted = Buku::query()->where('id', $id)->delete();
             if($is_deleted){
                 return response()->json([
                     'status' => 'success',
