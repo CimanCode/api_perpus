@@ -162,7 +162,7 @@ class BukuController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/getBukuByd/{id}",
+     *     path="/api/getBukuById/{id}",
      *     summary="Get buku by ID",
      *     description="Retrieve a specific buku by its ID",
      *     operationId="getBukuById",
