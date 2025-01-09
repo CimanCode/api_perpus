@@ -122,7 +122,7 @@
                 }
             }
         },
-        "/api/getBukuByd/{id}": {
+        "/api/getBukuById/{id}": {
             "get": {
                 "tags": [
                     "Books"
