@@ -10,6 +10,31 @@ use Illuminate\Support\Facades\Validator;
 
 class BukuController extends Controller
 {
+ /**
+ * @OA\Get(
+ *     path="/api/listBuku",
+ *     operationId="getBook",
+ *     tags={"Books"},
+ *     summary="Get All book",
+ *     description="Returns book data",
+ *     @OA\Response(
+ *         response=200,
+ *         description="Successful response",
+ *         @OA\JsonContent(
+ *             type="object",
+ *             @OA\Property(property="id", type="integer", example=1),
+ *             @OA\Property(property="judul", type="string", example="Book Title"),
+ *             @OA\Property(property="penulis", type="string", example="Author Name"),
+ *             @OA\Property(property="deskripsi", type="string", example="Author Name"),
+ *             @OA\Property(property="gambar", type="string", example="Gamabar1.png")
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=404,
+ *         description="Book not found"
+ *     )
+ * )
+ */
     public function listBuku(){
         try {
             $buku = Buku::query()->get();
@@ -32,7 +57,48 @@ class BukuController extends Controller
             ]);
         }
     }
-
+     /**
+     * @OA\Post(
+     *     path="/api/addBuku",
+     *     tags={"Books"},
+     *     summary="Create a new Books",
+     *     description="This endpoint for add new Books",
+     *     operationId="addBuku",
+     *     @OA\Parameter(
+     *         name="Accept",
+     *         in="header",
+     *         required=true,
+     *         description="Response format",
+     *         @OA\Schema(type="string", example="application/json")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+    *         @OA\MediaType(
+    *             mediaType="multipart/form-data",
+    *             @OA\Schema(
+    *                 required={"gambar"},
+    *                 @OA\Property(
+    *                     property="gambar",
+    *                     type="string",
+    *                     format="binary",
+    *                     description="gambar to upload"
+    *                 ),
+    *                 @OA\Property(property="judul", type="strinf", example="judul"),
+    *                 @OA\Property(property="penulis", type="strinf", example="penulis"),
+    *                 @OA\Property(property="deskripsi", type="strinf", example="deskripsi"),
+    *             )
+    *         )
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Invalid input"
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation error"
+     *     )
+     * )
+     */
     public function addBuku(Request $request){
         $rules = [
             'judul' => 'required',
@@ -94,6 +160,46 @@ class BukuController extends Controller
         }
     }
 
+    /**
+     * @OA\Get(
+     *     path="/api/getBukuByd/{id}",
+     *     summary="Get buku by ID",
+     *     description="Retrieve a specific buku by its ID",
+     *     operationId="getBukuById",
+     *     tags={"Books"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID of the buku",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer"
+     *         )
+     *     ),
+     *   @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(
+     *              @OA\Property(property="data", type="array",
+     *                  @OA\Items( type="object",
+     *                      @OA\Property(property="judul", type="string", example="string"),
+     *                      @OA\Property(property="penulis", type="string", example="string"),
+     *                      @OA\Property(property="gambar", type="string", example="string"),
+     *                      @OA\Property(property="deskripsi", type="string", example="string")
+     *                  )
+     *              )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Invalid input"
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation error"
+     *     )
+     * )
+     */
     public function getBukuById($id){
         if($id){
             $data = Buku::query()->where('id',$id)->first();
@@ -117,6 +223,57 @@ class BukuController extends Controller
 
     }
 
+    /**
+     * @OA\Post(
+     *     path="/api/updateBuku/{id}",
+     *     tags={"Books"},
+     *     summary="Create a update Books",
+     *     description="This endpoint for add update Books",
+     *     operationId="updateBukuById",
+     *     @OA\Parameter(
+     *         name="Accept",
+     *         in="header",
+     *         required=true,
+     *         description="Response format",
+     *         @OA\Schema(type="string", example="application/json")
+     *     ),
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID of the buku",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer"
+     *         )
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+    *         @OA\MediaType(
+    *             mediaType="multipart/form-data",
+    *             @OA\Schema(
+    *                 required={"gambar"},
+    *                 @OA\Property(
+    *                     property="gambar",
+    *                     type="string",
+    *                     format="binary",
+    *                     description="gambar to upload"
+    *                 ),
+    *                 @OA\Property(property="judul", type="strinf", example="judul"),
+    *                 @OA\Property(property="penulis", type="strinf", example="penulis"),
+    *                 @OA\Property(property="deskripsi", type="strinf", example="deskripsi"),
+    *             )
+    *         )
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Invalid input"
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation error"
+     *     )
+     * )
+     */
     public function updateBuku(Request $request, $id){
         if(!$id){
             return response()->json([
@@ -184,7 +341,32 @@ class BukuController extends Controller
             ]);
         }
     }
-
+     /**
+     * @OA\Delete(
+     *     path="/api/deleteBuku/{id}",
+     *     tags={"Books"},
+     *     summary="Delete Buku By id",
+     *     description="This endpoint for Delete Buku By id",
+     *     @OA\Parameter(
+     *         name="Accept",
+     *         in="header",
+     *         required=true,
+     *         description="Response format",
+     *         @OA\Schema(type="string", example="application/json")
+     *     ),
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="string"),
+     *         description="The rekapsuara id"
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation"
+     *     )
+     * )
+     */
     public function deleteBuku($id){
         if(!$id){
             return response()->json([

@@ -1,0 +1,316 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Documentation UAS PAM Management Buku Perpustakaan",
+        "description": "This is the API documentation for app Book Management",
+        "contact": {
+            "email": "admin@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/listBuku": {
+            "get": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Get All book",
+                "description": "Returns book data",
+                "operationId": "getBook",
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "judul": {
+                                            "type": "string",
+                                            "example": "Book Title"
+                                        },
+                                        "penulis": {
+                                            "type": "string",
+                                            "example": "Author Name"
+                                        },
+                                        "deskripsi": {
+                                            "type": "string",
+                                            "example": "Author Name"
+                                        },
+                                        "gambar": {
+                                            "type": "string",
+                                            "example": "Gamabar1.png"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Book not found"
+                    }
+                }
+            }
+        },
+        "/api/addBuku": {
+            "post": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Create a new Books",
+                "description": "This endpoint for add new Books",
+                "operationId": "addBuku",
+                "parameters": [
+                    {
+                        "name": "Accept",
+                        "in": "header",
+                        "description": "Response format",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "application/json"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "gambar"
+                                ],
+                                "properties": {
+                                    "gambar": {
+                                        "description": "gambar to upload",
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "judul": {
+                                        "type": "strinf",
+                                        "example": "judul"
+                                    },
+                                    "penulis": {
+                                        "type": "strinf",
+                                        "example": "penulis"
+                                    },
+                                    "deskripsi": {
+                                        "type": "strinf",
+                                        "example": "deskripsi"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Invalid input"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        },
+        "/api/getBukuByd/{id}": {
+            "get": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Get buku by ID",
+                "description": "Retrieve a specific buku by its ID",
+                "operationId": "getBukuById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the buku",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "judul": {
+                                                        "type": "string",
+                                                        "example": "string"
+                                                    },
+                                                    "penulis": {
+                                                        "type": "string",
+                                                        "example": "string"
+                                                    },
+                                                    "gambar": {
+                                                        "type": "string",
+                                                        "example": "string"
+                                                    },
+                                                    "deskripsi": {
+                                                        "type": "string",
+                                                        "example": "string"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        },
+        "/api/updateBuku/{id}": {
+            "post": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Create a update Books",
+                "description": "This endpoint for add update Books",
+                "operationId": "updateBukuById",
+                "parameters": [
+                    {
+                        "name": "Accept",
+                        "in": "header",
+                        "description": "Response format",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "application/json"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the buku",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "gambar"
+                                ],
+                                "properties": {
+                                    "gambar": {
+                                        "description": "gambar to upload",
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "judul": {
+                                        "type": "strinf",
+                                        "example": "judul"
+                                    },
+                                    "penulis": {
+                                        "type": "strinf",
+                                        "example": "penulis"
+                                    },
+                                    "deskripsi": {
+                                        "type": "strinf",
+                                        "example": "deskripsi"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Invalid input"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        },
+        "/api/deleteBuku/{id}": {
+            "delete": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Delete Buku By id",
+                "description": "This endpoint for Delete Buku By id",
+                "operationId": "265ee19ef5f5739e490e53e6665d2eda",
+                "parameters": [
+                    {
+                        "name": "Accept",
+                        "in": "header",
+                        "description": "Response format",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "application/json"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The rekapsuara id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "description": "Use a token to access the endpoints",
+                "name": "Authorization",
+                "in": "header",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Books",
+            "description": "Books"
+        }
+    ]
+}
